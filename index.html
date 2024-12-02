@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <title>Company Directory</title>
+    <link rel="stylesheet" href="./libs/css/normalize.css">
+    <link rel="stylesheet" href="./libs/ext_libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./libs/ext_libs/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="./libs/css/style.css">
+</head>
+<body>
+    <div id="turn">
+        Please turn your device
+    </div>
+    <div class="preloader">
+        <div class="preloader_message"></div>
+        <div class="loader">Loading</div>
+    </div>
+    <div class="toast hide align-items-center position-absolute p-1" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+         </div>
+          <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="modal_container">
+        <!-- Actions User Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <form id="addUserForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="add_user_item">
+                            <label for="add_user_name_input">Name</label>
+                            <input type="text" id="add_user_name_input" placeholder="Fill in..." data-value="" required>
+                        </div>
+                        <div class="add_user_item">
+                            <label for="add_user_surname_input">Surname</label>
+                            <input type="text" id="add_user_surname_input" placeholder="Fill in..." data-value="" required>
+                        </div>
+                        <div class="add_user_item">
+                            <label for="add_user_jobtitle_input">Job title</label>
+                            <input type="text" id="add_user_jobtitle_input" placeholder="Fill in..." data-value="">
+                        </div>
+                        <div class="add_user_item">
+                            <label for="add_user_email_input">E-mail</label>
+                            <input type="email" id="add_user_email_input" placeholder="Fill in..." data-value="" required>
+                        </div>
+                        <div class="add_user_item">
+                            <label for="add_user_department_select">Department</label>
+                            <select name="addUserDepartment" class="add_user_department_select" id="add_user_department_select"></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary add_user_close_button" data-bs-target="#addButtonModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Discard</button>
+                        <button type="submit" class="btn btn-primary add_user_save_button">Save</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+        </div>
+        <!-- Actions Department Modal -->
+        <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <form id="addDepartmentForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDepartmentModalLabel">Add Department</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="add_new_item">
+                            <label for="add_new_department_input">Department</label>
+                            <input type="text" id="add_new_department_input" data-value="" class="add_new_department_input" placeholder="Fill in ..." required>
+                        </div>
+                        <div class="add_new_item">
+                            <label for="add_new_location_select">Location</label>
+                            <select name="addNewLocationSelect" id="add_new_location_select" class="add_new_location_select"></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary add_department_close_button" data-bs-target="#addButtonModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Discard</button>
+                        <button type="submit" class="btn btn-primary add_department_save_button">Save</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+        </div>
+        <!-- Actions Location Modal -->
+        <div class="modal fade" id="addLocationModal" tabindex="-1" aria-labelledby="addLocationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <form id="addLocationForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addLocationModalLabel">Add/Delete Location</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="location_add_new_location_item">
+                            <label for="location_add_new_location_input">Location</label>
+                            <input type="text" id="location_add_new_location_input" data-value="" class="location_add_new_location_input" placeholder="Fill in ..." required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary add_location_close_button" data-bs-target="#addButtonModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Discard</button>
+                        <button type="submit" class="btn btn-primary add_location_save_button">Save</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+        </div>
+        <!-- Actions Mobile Modal -->
+        <div class="modal fade" id="addButtonModalToggle" aria-hidden="true" aria-labelledby="addButtonModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addButtonModalToggleLabel">Actions</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="add_delete_button_wrapper">
+                        <div class="add_delete_button_item">
+                            <button type="button" class="btn btn-primary add_user_mobile" data-bs-dismiss="modal"  data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+                        </div>
+                        <div class="add_delete_button_item">
+                            <button type="button" class="btn btn-primary add_department_mobile" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">Add Department</button>
+                        </div>
+                        <div class="add_delete_button_item">
+                            <button type="button" class="btn btn-primary add_location_mobile" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#addLocationModal">Add Location</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- Filter Mobile Modal -->
+        <div class="modal fade" id="filterButtonModal" aria-hidden="true" aria-labelledby="filterButtonModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <form id="filterMobileModal">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="filterButtonModalLabel">Filters</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="filters_body_mobile">
+                            <div class="filters_item_mobile">
+                                <div class="check_box_mobile">
+                                    <label for="name_checkbox_mobile">Name</label>
+                                    <input class="name_checkbox_mobile" type="checkbox" id="name_checkbox_mobile">
+                                </div>
+                                <div class="setdata_mobile">
+                                    <input class="name_input_mobile" type="text" placeholder="Fill in.." data-searched-value="">
+                                    <button class="name_button_mobile"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </div>
+                            <div class="filters_item_mobile">
+                                <div class="check_box_mobile">
+                                    <label for="surname_checkbox_mobile">Surname</label>
+                                    <input class="surname_checkbox_mobile" type="checkbox" id="surname_checkbox_mobile">
+                                </div>
+                                <div class="setdata_mobile">
+                                    <input class="surname_input_mobile" type="text" placeholder="Fill in.." data-searched-value="">
+                                    <button class="surname_button_mobile"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </div>
+                            <div class="filters_item_mobile">
+                                <div class="check_box_mobile">
+                                    <label for="jobtitle_checkbox_mobile">Job title</label>
+                                    <input class="jobtitle_checkbox_mobile" type="checkbox" id="jobtitle_checkbox_mobile">
+                                </div>
+                                <div class="setdata_mobile">
+                                    <input class="jobtitle_input_mobile" type="text" placeholder="Fill in.." data-searched-value="">
+                                    <button class="jobtitle_button_mobile"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </div>
+                            <div class="filters_item_mobile">
+                                <div class="check_box_mobile">
+                                    <label for="email_checkbox_mobile">E-mail</label>
+                                    <input class="email_checkbox_mobile" type="checkbox" id="email_checkbox_mobile">
+                                </div>
+                                <div class="setdata_mobile">
+                                    <input class="email_input_mobile" type="email" placeholder="Fill in.." data-searched-value="">
+                                    <button class="email_button_mobile"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </div>
+                            <div class="filters_item_mobile">
+                                <div class="check_box_mobile">
+                                    <label for="department_checkbox_mobile">Department</label>
+                                    <input class="department_checkbox_mobile" type="checkbox" id="department_checkbox_mobile">
+                                </div>
+                                <div class="setdata_mobile">
+                                    <select class="department_select_mobile" name="department" id="department_select_mobile" data-selected-value="">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="filters_item_mobile">
+                                <div class="check_box_mobile">
+                                    <label for="location_checkbox_mobile">Location</label>
+                                    <input class="location_checkbox_mobile" type="checkbox" id="location_checkbox_mobile">
+                                </div>
+                                <div class="setdata_mobile">
+                                    <select class="location_select_mobile" name="location" id="location_select_mobile" data-selected-value="">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary clear_button_mobile">Clear Filter</button>
+                        <button type="submit" class="btn btn-primary apply_button_mobile" disabled>Apply</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+        </div>
+        <!-- History Modal -->
+        <div class="modal fade" id="userHistoryModal" tabindex="-1" aria-labelledby="userHistoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="userHistoryModalLabel">User Acitivity Log</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="history_wrapper"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+        </div>
+        <!-- Result Edit User Modal -->
+        <div class="result_user_edit">
+            <div class="modal fade" id="resultEditUserModal" tabindex="-1" aria-labelledby="resultEditUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <form id="editUserForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="resultEditUserModalLabel">Edit User</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" data-id="">
+                            <div class="result_edit_user_item">
+                                <label for="result_edit_user_name_input">Name</label>
+                                <input type="text" id="result_edit_user_name_input" placeholder="Fill in..." data-value="" required>
+                            </div>
+                            <div class="result_edit_user_item">
+                                <label for="result_edit_user_surname_input">Surname</label>
+                                <input type="text" id="result_edit_user_surname_input" placeholder="Fill in..." data-value="" required>
+                            </div>
+                            <div class="result_edit_user_item">
+                                <label for="result_edit_user_jobtitle_input">Job title</label>
+                                <input type="text" id="result_edit_user_jobtitle_input" placeholder="Fill in..." data-value="">
+                            </div>
+                            <div class="result_edit_user_item">
+                                <label for="result_edit_user_email_input">E-mail</label>
+                                <input type="email" id="result_edit_user_email_input" placeholder="Fill in..." data-value="" required>
+                            </div>
+                            <div class="result_edit_user_item">
+                                <label for="result_edit_user_department_select">Department</label>
+                                <select name="resultEditUserDepartment" class="result_edit_user_department_select" id="result_edit_user_department_select"></select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary result_edit_user_close_button" data-bs-dismiss="modal">Discard</button>
+                            <button type="submit" class="btn btn-primary result_edit_user_save_button">Update</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- Result Delete User Modal -->
+        <div class="result_user_delete">
+            <div class="modal fade" id="resultDeleteUserModal" tabindex="-1" aria-labelledby="resultDeleteUserModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="resultDeleteUserModalLabel">Delete User</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="result_delete_user_item">
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary result_delete_user_close_button" data-bs-dismiss="modal">No</button>
+                      <button type="button" class="btn btn-primary result_delete_user_save_button">Yes</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- Result Edit Department Modal -->
+        <div class="result_department_edit">
+            <div class="modal fade" id="resultEditDepartmentModal" tabindex="-1" aria-labelledby="resultEditDepartmentModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <form id="editDepartmentForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="resultEditDepartmentModalLabel">Edit Department</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" data-id="">
+                            <div class="result_edit_department_item">
+                                <label for="result_edit_department_department_input">Department</label>
+                                <input type="text" id="result_edit_department_department_input" placeholder="Fill in..." data-value="" required>
+                            </div>
+                            <div class="result_edit_department_item">
+                                <label for="result_edit_department_location_select">Location</label>
+                                <select name="resultEditDepartmentLocation" class="result_edit_department_location_select" id="result_edit_department_location_select"></select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary result_edit_department_close_button" data-bs-dismiss="modal">Discard</button>
+                            <button type="submit" class="btn btn-primary result_edit_department_save_button">Update</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- Result Delete Department Modal -->
+        <div class="result_department_delete">
+            <div class="modal fade" id="resultDeleteDepartmentModal" tabindex="-1" aria-labelledby="resultDeleteDepartmentModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <form id="deleteDepartmentForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="resultDeleteDepartmentModalLabel">Delete Department</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" data-id="">
+                            <div class="result_delete_department_item"></div>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- Result Edit Location Modal -->
+        <div class="result_location_edit">
+            <div class="modal fade" id="resultEditLocationModal" tabindex="-1" aria-labelledby="resultEditLocationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <form id="editLocationForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="resultEditLocationModalLabel">Edit Location</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" data-id="">
+                            <div class="result_edit_location_item">
+                                <label for="result_edit_location_location_input">Location</label>
+                                <input type="text" id="result_edit_location_location_input" placeholder="Fill in..." data-value="" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary result_edit_location_close_button" data-bs-dismiss="modal">Discard</button>
+                            <button type="submit" class="btn btn-primary result_edit_location_save_button">Update</button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- Result Delete Location Modal -->
+        <div class="result_location_delete">
+            <div class="modal fade" id="resultDeleteLocationModal" tabindex="-1" aria-labelledby="resultDeleteLocationModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <form id="deleteLocationForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="resultDeleteLocationModalLabel">Delete Location</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" data-id="">
+                            <div class="result_delete_location_item">
+                                
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="header_wrapper">
+            <div class="container-fluid">
+                <div class="row gy-2 gy-xl-0">
+                    <div class="col-12 col-xl-6 d-flex gap-3 gap-sm-4 justify-content-center justify-content-xl-start">
+                        <div class="search_box">
+                            <input class="header_search" id="search" type="search" placeholder="Search" data-searched-value="">
+                            <button class="search_box_button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                        <button class="refresh_button"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        <button class="add_button" data-bs-toggle="modal" data-bs-target="#addButtonModalToggle"><i class="fa-solid fa-plus"></i></button>
+                        <button class="filter_button" data-bs-toggle="modal" data-bs-target="#filterButtonModal"><i class="fa-solid fa-filter-list"></i></button>
+                        <button class="history_button_mobile" data-bs-toggle="modal" data-bs-target="#userHistoryModal"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                    </div>
+                    <div class="col-12 col-xl-6 d-flex gap-4 justify-content-center justify-content-xl-end">
+                        <div class="sort_box_label">Sort By</div>
+                        <select class="header_select" name="select" id="select" data-selected-value = "firstName" data-source = "">
+                        </select>
+                        <button class="sort_box_button" data-selected-value = "asc" data-source = ""><i class="fa-regular fa-arrow-down-a-z"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="control_button_wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="pills_wrapper">
+                        <ul class="nav nav-pills nav-justified gap-2" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active pills_users" id="pills-users-tab" data-bs-toggle="pill" data-bs-target="#pills-users" type="button" role="tab" aria-controls="pills-users" aria-selected="true">Users</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link pills_departments" id="pills-departments-tab" data-bs-toggle="pill" data-bs-target="#pills-departments" type="button" role="tab" aria-controls="pills-departments" aria-selected="false">Departments</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link pills_locations" id="pills-locations-tab" data-bs-toggle="pill" data-bs-target="#pills-locations" type="button" role="tab" aria-controls="pills-locations" aria-selected="false">Locations</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>       
+        </div>
+    </header>
+    <main>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+                <div class="main_user_wrapper"></div>
+                <div class="main_user_wrapper_mobile"></div>
+            </div>
+            <div class="tab-pane fade" id="pills-departments" role="tabpanel" aria-labelledby="pills-departments-tab">
+                <div class="main_departments_wrapper"></div>
+                <div class="main_departments_wrapper_mobile"></div>
+            </div>
+            <div class="tab-pane fade" id="pills-locations" role="tabpanel" aria-labelledby="pills-locations-tab">
+                <div class="main_locations_wrapper"></div>
+                <div class="main_locations_wrapper_mobile"></div>
+            </div>
+        </div>
+    </main>
+    <script src="./libs/js/jquery-3.6.1.min.js"></script>
+    <script src="./libs/ext_libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./libs/ext_libs/Date/date.js"></script>
+    <script src="./libs/js/script.js"></script>
+</body>
+</html>
